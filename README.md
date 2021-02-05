@@ -12,4 +12,4 @@ Coding projects in:
 * Excel
 * Tableau
 
-The idea is to code frequently enough that solutions and design will become more intuitive. i.e less googling and better workflow ;)
+The idea is to code frequently enough that solutions, design, and intergration of the above will become more intuitive. i.e less googling and better workflow ;)
