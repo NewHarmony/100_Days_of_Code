@@ -9,6 +9,7 @@ Coding projects in:
 * Python
 * Data Science/ML
 * Django
+* SQL
 * Excel
 * Tableau
 
