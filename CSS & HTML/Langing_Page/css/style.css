@@ -46,12 +46,37 @@ body{
 
 #showcase .button:hover{
     background:rgba(255, 255, 255, 0.6);
-    color: rgb(48, 34, 14);
+    color: rgb(44, 167, 167)
 }
 
 #section-a{
     padding:20px;
-    background:rgba(0, 0, 255, 0.6);
+    background:rgb(44, 167, 167);
     color:rgba(255, 255, 255, 1);
     text-align:center;
+}
+
+#section-b{
+    padding:20px;
+    background:rgba(255, 255, 255, 1);
+    color:rgb(44, 167, 167);
+    text-align:center;
+}
+
+#section-c{
+    display: flex;
+}
+
+#section-c div{
+    padding:20px;
+}
+
+#section-c .box-1, #section-c .box-3{
+    background: rgb(44, 167, 167);
+    color:rgba(255, 255, 255, 1);
+}
+
+#section-c .box-2{
+    background: rgb(146, 141, 137);
+    color:rgba(255, 255, 255, 1);
 }
