@@ -1,3 +1,6 @@
+# Project based on Chanin Nantasenamat (aka Data Professor) tutorial on Freecodecamp.org
+# https://www.youtube.com/watch?v=JwSS70SZdyM&list=PLHezTAVBPWVM3vwd-GY8907IsryL5zYYm&index=33
+
 import streamlit as st 
 import pandas as pd
 import shap
