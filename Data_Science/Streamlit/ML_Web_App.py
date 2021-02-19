@@ -4,7 +4,7 @@
 import streamlit as st
 from sklearn import datasets
 import numpy as np
-import mathplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 
 #Classifiers to import
 from sklearn.neighbors import KNeighborsClassifier
@@ -34,7 +34,7 @@ Which one is the best?
 """)
 
 dataset_name = st.sidebar.selectbox("Select Dataset", ("Iris", "Breast Cancer", "Diabetes", "Boston Housing", "Digits"))
-classifier_name = st.sidebar.selectbox("Select ML Algorithmn", ("KNN", "SVC RBF", "SVR", "Random Forest Regressor","Random Forest Classifier", "Logistic Regression", "Decision Tree", "Linear Regression", "Naive Bayes", "K-Means Clustering", "Guassian Process" ))
+classifier_name = st.sidebar.selectbox("Select ML Algorithmn", ("KNN", "SVC RBF", "SVR", "Random Forest Regressor","Random Forest Classifier", "Logistic Regression", "Decision Tree", "Linear Regression", "Naive Bayes", "K-Means Clustering", "Guassian Process Classifier", "Guassian Process Regressor"))
 
 def get_dataset(dataset_name):
     if dataset_name == "Iris":
@@ -82,9 +82,11 @@ def add_parameter_ui(clf_name):
         n_estimators = st.sidebar.slider("n_estimators", 1, 100)
         params["max_depth"] = max_depth
         params["n_estimators"] = n_estimators
-    elif clf_name == "Guassian Process":
+    elif clf_name == "Guassian Process Classifier":
         pass
 
+    elif clf_name == "Guassian Process Regressor":
+        pass
     elif clf_name == "SVR":
         pass
     elif clf_name == "Linear Regression": 
@@ -106,11 +108,28 @@ params = add_parameter_ui(classifier_name)
 def get_classifier(clf_name, params):
     if clf_name =="KNN":
         clf = KNeighborsClassifier(n_neighbors=params["K"])
-    elif clf_name == "SVC":
-        clf=SVC(C=params["C"])
+    elif clf_name == "SVC RBF":
+        clf=SVC(C=params["C"],gamma = params["gamma"] )
+    elif clf_name == "Logistic Regression":
+        clf = LogisticRegression(C=params["C"], max_iter = params["max_iter"] )
+    elif clf_name == "Decision Tree":
+        clf = DecisionTreeClassifier(max_depth=params["max_depth"])
+    elif clf_name == "Naive Bayes":
+        clf = GaussianNB()
     elif clf_name == "Random Forest Classifier":
         clf = RandomForestClassifier(n_estimators=params["n_estimators"],
                                     max_depth=params["max_depth"], random_state=1682)
+    elif clf_name == "Guassian Process Classifier":
+        clf =GaussianProcessClassifier()
+
+    elif clf_name == "Guassian Process Regressor":
+        clf = GaussianProcessRegressor()
+    elif clf_name == "SVR":
+        clf = SVR()
+    elif clf_name == "Linear Regression": 
+        clf = LinearRegression()
+    elif clf_name == "K-Means Clustering": 
+        clf = KMeans(max_iter= params["max_iter"], n_clusters=params["n_clusters"])
     else:
         clf = RandomForestRegressor(n_estimators=params["n_estimators"],
                                     max_depth=params["max_depth"], random_state=1682)
@@ -122,11 +141,11 @@ clf = get_classifier(classifier_name, params)
 X_train, X_test, Y_train, Y_test = train_test_split(X,Y, test_size=0.2, random_state=1682)
 
 clf.fit(X_train, Y_train)
-y_pred = clf.predict(X_test)
+Y_pred = clf.predict(X_test)
 
 acc = accuracy_score(Y_test, Y_pred)
 st.write(f"classifier = {classifier_name}")
-st.write("accuracy = {acc}")
+st.write(f"accuracy = {acc}")
 
 #Plot
 pca = PCA(2)
@@ -136,10 +155,12 @@ x1 = X_projected[:,0]
 x2 = X_projected[:,1]
 
 fig = plt.figure()
-plt.scatter(x1, x2, c=y, alpha=0.8, cmap="virdis")
+plt.scatter(x1, x2, c=Y, alpha=0.8, cmap="jet")
 plt.xlabel("Principle Component 1")
 plt.ylabel("Principle Component 2")
 plt.colorbar()
+st.pyplot(fig)
 
-st.pyplot()
+
+
 
