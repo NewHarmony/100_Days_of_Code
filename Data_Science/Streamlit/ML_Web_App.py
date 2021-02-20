@@ -9,42 +9,33 @@ import matplotlib.pyplot as plt
 #Classifiers to import
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import SVC
-from sklearn.svm import SVR
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.ensemble import RandomForestRegressor
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.tree import DecisionTreeRegressor
 from sklearn.cluster import KMeans
-from sklearn.linear_model import LinearRegression
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import GaussianNB
 from sklearn.gaussian_process import GaussianProcessClassifier
-from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.decomposition import PCA
 
 from sklearn.model_selection import train_test_split
 
 from sklearn.metrics import accuracy_score
 
-st.title("Streamlit ML App")
+st.title("Streamlit Machine Learning App")
 
 st.write("""
-# Explore different classifiers
-Which one is the best?
+## Explore different classifiers
+Select a dataset and a classifier from the sidebar. Which classifier gives the best results?
 """)
 
-dataset_name = st.sidebar.selectbox("Select Dataset", ("Iris", "Breast Cancer", "Diabetes", "Boston Housing", "Digits"))
-classifier_name = st.sidebar.selectbox("Select ML Algorithmn", ("KNN", "SVC RBF", "SVR", "Random Forest Regressor","Random Forest Classifier", "Logistic Regression", "Decision Tree", "Linear Regression", "Naive Bayes", "K-Means Clustering", "Guassian Process Classifier", "Guassian Process Regressor"))
+dataset_name = st.sidebar.selectbox("Select Dataset", ("Iris", "Breast Cancer", "Digits"))
+classifier_name = st.sidebar.selectbox("Select an ML Classifier", ("KNN", "SVC RBF", "Random Forest Classifier", "Logistic Regression", "Decision Tree", "Naive Bayes", "K-Means Clustering", "Guassian Process Classifier"))
 
 def get_dataset(dataset_name):
     if dataset_name == "Iris":
         data = datasets.load_iris()
     elif dataset_name == "Breast Cancer":
         data = datasets.load_breast_cancer()
-    elif dataset_name == "Diabetes":
-        data = datasets.load_diabetes()
-    elif dataset_name == "Boston Housing":
-        data = datasets.load_boston()
     else:
         data = datasets.load_digits()
     X = data.data
@@ -53,7 +44,7 @@ def get_dataset(dataset_name):
 
 X, Y = get_dataset(dataset_name)
 st.write(f"""
-# Selected dataset: *{dataset_name}*""")
+## **Selected dataset: *{dataset_name}* **""")
 st.write(f"Shape of *{dataset_name}* dataset", X.shape)
 st.write("Number of classes", len(np.unique(Y)))
 
@@ -64,7 +55,7 @@ def add_parameter_ui(clf_name):
         params["K"] = K
     elif clf_name == "SVC RBF":
         C = st.sidebar.slider("C", 0.01, 10.0)
-        gamma = st.sidebar.slider("gamma", 1, 10)
+        gamma = st.sidebar.slider("gamma", 1, 15)
         params["C"] = C
         params["gamma"] = gamma
     elif clf_name == "Logistic Regression":
@@ -73,32 +64,20 @@ def add_parameter_ui(clf_name):
         params["C"] = C
         params["max_iter"] = max_iter
     elif clf_name == "Decision Tree":
-        max_depth = st.sidebar.slider("max_depth", 2, 15)
+        max_depth = st.sidebar.slider("max_depth", 2, 50)
         params["max_depth"] = max_depth
     elif clf_name == "Naive Bayes":
         pass
-    elif clf_name == "Random Forest Classifier":
-        max_depth = st.sidebar.slider("max_depth", 2, 15)
-        n_estimators = st.sidebar.slider("n_estimators", 1, 100)
-        params["max_depth"] = max_depth
-        params["n_estimators"] = n_estimators
     elif clf_name == "Guassian Process Classifier":
         pass
-
-    elif clf_name == "Guassian Process Regressor":
-        pass
-    elif clf_name == "SVR":
-        pass
-    elif clf_name == "Linear Regression": 
-        pass
     elif clf_name == "K-Means Clustering": 
-        max_iter = st.sidebar.slider("max_iter", 2, 200)
+        max_iter = st.sidebar.slider("max_iter", 2, 500)
         n_clusters = st.sidebar.slider("n_clusters", 2, 20)
         params["max_iter"] = max_iter
         params["n_clusters"] = n_clusters
     else:
-        max_depth = st.sidebar.slider("max_depth", 2, 15)
-        n_estimators = st.sidebar.slider("n_estimators", 1, 100)
+        max_depth = st.sidebar.slider("max_depth", 2, 50)
+        n_estimators = st.sidebar.slider("n_estimators", 1, 600)
         params["max_depth"] = max_depth
         params["n_estimators"] = n_estimators
     return params
@@ -116,23 +95,14 @@ def get_classifier(clf_name, params):
         clf = DecisionTreeClassifier(max_depth=params["max_depth"])
     elif clf_name == "Naive Bayes":
         clf = GaussianNB()
-    elif clf_name == "Random Forest Classifier":
-        clf = RandomForestClassifier(n_estimators=params["n_estimators"],
-                                    max_depth=params["max_depth"], random_state=1682)
     elif clf_name == "Guassian Process Classifier":
         clf =GaussianProcessClassifier()
 
-    elif clf_name == "Guassian Process Regressor":
-        clf = GaussianProcessRegressor()
-    elif clf_name == "SVR":
-        clf = SVR()
-    elif clf_name == "Linear Regression": 
-        clf = LinearRegression()
     elif clf_name == "K-Means Clustering": 
         clf = KMeans(max_iter= params["max_iter"], n_clusters=params["n_clusters"])
     else:
-        clf = RandomForestRegressor(n_estimators=params["n_estimators"],
-                                    max_depth=params["max_depth"], random_state=1682)
+        clf = RandomForestClassifier(n_estimators=params["n_estimators"],
+                        max_depth=params["max_depth"], random_state=1682)
     return clf
 
 clf = get_classifier(classifier_name, params)
@@ -146,6 +116,9 @@ Y_pred = clf.predict(X_test)
 acc = accuracy_score(Y_test, Y_pred)
 st.write(f"classifier = {classifier_name}")
 st.write(f"accuracy = {acc}")
+st.write("---")
+st.write("**X Values**")
+st.write(X)
 
 #Plot
 pca = PCA(2)
@@ -154,6 +127,8 @@ X_projected = pca.fit_transform(X)
 x1 = X_projected[:,0]
 x2 = X_projected[:,1]
 
+st.write("---")
+st.write("**Principle Component Analysis**")
 fig = plt.figure()
 plt.scatter(x1, x2, c=Y, alpha=0.8, cmap="jet")
 plt.xlabel("Principle Component 1")
