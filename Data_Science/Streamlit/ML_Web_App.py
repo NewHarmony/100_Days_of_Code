@@ -51,33 +51,33 @@ st.write("Number of classes", len(np.unique(Y)))
 def add_parameter_ui(clf_name):
     params = dict()
     if clf_name == "KNN":
-        K = st.sidebar.slider("K", 1, 15)
+        K = st.sidebar.slider("K", 1, 20,2)
         params["K"] = K
     elif clf_name == "SVC RBF":
-        C = st.sidebar.slider("C", 0.01, 10.0)
-        gamma = st.sidebar.slider("gamma", 1, 15)
+        C = st.sidebar.slider("C", 0.01, 15.0, 7.0)
+        gamma = st.sidebar.slider("gamma", 1, 20, 2)
         params["C"] = C
         params["gamma"] = gamma
     elif clf_name == "Logistic Regression":
-        C = st.sidebar.slider("C", 0.01, 10.0)
-        max_iter = st.sidebar.slider("max_iter", 2, 200)
+        C = st.sidebar.slider("C", 0.01, 15.0, 7.0)
+        max_iter = st.sidebar.slider("max_iter", 2, 1000, 10)
         params["C"] = C
         params["max_iter"] = max_iter
     elif clf_name == "Decision Tree":
-        max_depth = st.sidebar.slider("max_depth", 2, 50)
+        max_depth = st.sidebar.slider("max_depth", 2, 100, 10)
         params["max_depth"] = max_depth
     elif clf_name == "Naive Bayes":
         pass
     elif clf_name == "Guassian Process Classifier":
         pass
     elif clf_name == "K-Means Clustering": 
-        max_iter = st.sidebar.slider("max_iter", 2, 500)
-        n_clusters = st.sidebar.slider("n_clusters", 2, 20)
+        max_iter = st.sidebar.slider("max_iter", 2, 1000, 10)
+        n_clusters = st.sidebar.slider("n_clusters", 2, 100, 3)
         params["max_iter"] = max_iter
         params["n_clusters"] = n_clusters
     else:
-        max_depth = st.sidebar.slider("max_depth", 2, 50)
-        n_estimators = st.sidebar.slider("n_estimators", 1, 600)
+        max_depth = st.sidebar.slider("max_depth", 2, 100, 10)
+        n_estimators = st.sidebar.slider("n_estimators", 1, 1000, 100)
         params["max_depth"] = max_depth
         params["n_estimators"] = n_estimators
     return params
