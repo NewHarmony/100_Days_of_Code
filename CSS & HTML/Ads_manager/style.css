@@ -24,6 +24,41 @@ body {
     width: 1000px;
 }
 
+.title {
+    font-size: 24px;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 20px ;
+}
+.edit-results{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px;
+}
+
+.search {
+    background-color: #1c223b85;
+    border-radius: 5px;
+    border: 1px solid;
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+.filter {
+    background-color: #1c223b85;
+    border-radius: 5px;
+    border: 1px solid;
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+.search-bar i { 
+    position: relative; 
+    color: rgba(255, 255, 255, 0.3);
+} 
+
+
+
 table {
     color: #e2e2e2;
     padding: 10px;
