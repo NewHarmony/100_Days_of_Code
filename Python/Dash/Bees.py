@@ -42,14 +42,18 @@ app.layout = html.Div([
     
     html.Br(), 
     html.H2("Colonies Affected By Pesticides", style={'text-align': 'left'}),
-    dcc.Graph(id='my_bee_map2', figure={})
+    html.Div(
+        [dcc.Graph(id='my_bee_map2', figure={}),
+        dcc.Graph(id='my_bee_map3', figure={})], style={'display': 'flex'}
+    )
 ])
 
 #The callback
 @app.callback(
     [Output(component_id='output_container', component_property='children'),
     Output(component_id='my_bee_map', component_property='figure'),
-    Output(component_id='my_bee_map2', component_property='figure')],
+    Output(component_id='my_bee_map2', component_property='figure'),
+    Output(component_id='my_bee_map3', component_property='figure')],
     [Input(component_id='slct_year', component_property='value')]
     )
 
@@ -90,7 +94,10 @@ def update_graph(option_slctd):
         labels={'Pct of Colonies Impacted': '% of Bee Colonies'},
         template='plotly_dark'
         )
-    return container, fig, fig2
+
+    fig3 = px.bar(df_copy, x='state_code', y='Pct of Colonies Impacted')
+    # fig.show()
+    return container, fig, fig2, fig3
 
 if __name__ == '__main__':
     app.run_server(debug=True)
