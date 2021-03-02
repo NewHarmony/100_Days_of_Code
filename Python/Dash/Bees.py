@@ -15,6 +15,10 @@ print(df[:5])
 df = df.groupby(['State', 'ANSI','Affected by', 'Year', 'state_code'])[['Pct of Colonies Impacted']].mean()
 df.reset_index(inplace=True)
 print(df[:5])
+bee_killers = df["Affected by"].unique().tolist()
+print(bee_killers)
+states = df["State"].unique().tolist()
+print(states)
 
 #App Layout
 app.layout = html.Div([
@@ -44,7 +48,31 @@ app.layout = html.Div([
     html.H2("Colonies Affected By Pesticides", style={'text-align': 'left'}),
     html.Div(
         [dcc.Graph(id='my_bee_map2', figure={}),
-        dcc.Graph(id='my_bee_map3', figure={})], style={'display': 'flex'}
+        dcc.Graph(id='my_bee_map3', figure={})], style={'display': 'flex', 'width':'100%'}
+    ),
+    
+    html.Br(), 
+    html.H2("Line Graph Of Problems Known to Affect Bess", style={'text-align': 'left'}),
+    html.Br(),
+    html.Div(
+        [dcc.Dropdown(id="slct_issue", 
+                    options=[{"label": issue, "value": issue} for issue in bee_killers],
+                    multi=False,
+                    value="Pesticides",
+                    style={'width': "40%"}
+                    ),
+        dcc.Dropdown(id="slct_state", 
+                    options=[
+                        {"label": state, "value": state} for state in states],
+                    multi=True,
+                    value=states[:2],
+                    style={'width': "40%"}
+                    )], 
+        style={'display': 'flex', 'width':'100%'}
+        ),
+
+    html.Div(dcc.Graph(id='line_chart', figure={})
+
     )
 ])
 
@@ -53,11 +81,15 @@ app.layout = html.Div([
     [Output(component_id='output_container', component_property='children'),
     Output(component_id='my_bee_map', component_property='figure'),
     Output(component_id='my_bee_map2', component_property='figure'),
-    Output(component_id='my_bee_map3', component_property='figure')],
-    [Input(component_id='slct_year', component_property='value')]
+    Output(component_id='my_bee_map3', component_property='figure'),
+    Output(component_id='line_chart', component_property='figure')],
+    [Input(component_id='slct_year', component_property='value'),
+    Input(component_id='slct_issue', component_property='value'),
+    Input(component_id='slct_state', component_property='value'),
+    ]
     )
 
-def update_graph(option_slctd):
+def update_graph(option_slctd, issue, states_slctd):
     print(option_slctd)
     print(type(option_slctd))
 
@@ -97,7 +129,16 @@ def update_graph(option_slctd):
 
     fig3 = px.bar(df_copy, x='state_code', y='Pct of Colonies Impacted')
     # fig.show()
-    return container, fig, fig2, fig3
+    
+    df_copy = df.copy()
+    df_copy = df_copy[df_copy["Affected by"] == issue]
+    df_copy = df_copy[df_copy["State"].isin(states_slctd)]
+
+
+    fig_linechart = px.line(df_copy, x='Year', y='Pct of Colonies Impacted', color = 'State',template='plotly_dark')
+
+    
+    return container, fig, fig2, fig3, fig_linechart
 
 if __name__ == '__main__':
     app.run_server(debug=True)
