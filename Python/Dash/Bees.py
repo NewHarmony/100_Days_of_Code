@@ -22,10 +22,11 @@ print(states)
 
 #App Layout
 app.layout = html.Div([
-    html.H1("Bee's Web Application Dashboards", style={'text-align': 'center'}),
+    html.H1("Bee Web Application Dashboards", style={'text-align': 'center'}),
     html.Br(),
-
-    dcc.Dropdown(id="slct_year", 
+    html.Br(),
+    html.Div(
+        [dcc.Dropdown(id="slct_year", 
                     options=[
                         {"label": "2015", "value": 2015},
                         {"label": "2016", "value": 2016},
@@ -33,11 +34,11 @@ app.layout = html.Div([
                         {"label": "2018", "value": 2018}],
                     multi=False,
                     value=2015,
-                    style={'width': "40%"}
+                    style={'width': "40%",'color':'darkgray'}
                     ),
-    
-    html.Br(),
-    html.Div(id='output_container', children=[]),
+    html.Div(id='output_container', children=[])],
+    style={'display':'flex', 'text-align': 'left'} 
+    ),
     html.Br(),
 
     html.H2("Colonies Affected By Varroa_mites", style={'text-align': 'left'}), 
@@ -52,29 +53,28 @@ app.layout = html.Div([
     ),
     
     html.Br(), 
-    html.H2("Line Graph Of Problems Known to Affect Bess", style={'text-align': 'left'}),
+    html.H2("Line Graph Of Problems Known To Affect Bess", style={'text-align': 'left'}),
     html.Br(),
     html.Div(
         [dcc.Dropdown(id="slct_issue", 
                     options=[{"label": issue, "value": issue} for issue in bee_killers],
                     multi=False,
                     value="Pesticides",
-                    style={'width': "40%"}
+                    style={'width': "40%",'color':'darkgray'}
                     ),
         dcc.Dropdown(id="slct_state", 
                     options=[
                         {"label": state, "value": state} for state in states],
                     multi=True,
                     value=states[:2],
-                    style={'width': "40%"}
+                    style={'width': "40%",'color':'darkgray'}
                     )], 
         style={'display': 'flex', 'width':'100%'}
         ),
 
     html.Div(dcc.Graph(id='line_chart', figure={})
-
     )
-])
+], style={'background-color':'black', 'color':'white', "padding":"5px"})
 
 #The callback
 @app.callback(
