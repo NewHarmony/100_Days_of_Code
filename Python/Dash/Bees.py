@@ -22,7 +22,7 @@ print(states)
 
 #App Layout
 app.layout = html.Div([
-    html.H1("Bee Web Application Dashboards", style={'text-align': 'center'}),
+    html.H1("Bee Web Application Dashboard", style={'text-align': 'center'}),
     html.Br(),
     html.Br(),
     html.Div(
