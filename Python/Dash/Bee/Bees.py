@@ -53,7 +53,7 @@ app.layout = html.Div([
     ),
     
     html.Br(), 
-    html.H2("Problems Known To Affect Bess", style={'text-align': 'left'}),
+    html.H2("Problems Known To Affect Bees", style={'text-align': 'left'}),
     html.Br(),
     html.Div(
         [dcc.Dropdown(id="slct_issue", 
