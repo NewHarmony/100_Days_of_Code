@@ -8,17 +8,21 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
     </head>
     <body>
+        <div class="menu-btn">
+            <i class="fas fa-bars fa-2x"></i>
+        </div>
+
         <div class="container">
             <!-- Nav-->
             <nav class="main-nav">
                 <img src="img/logo.png" alt="Microsoft" class="logo">
                 <ul class="main-menu">
-                    <li><a href="#"></a>Office</li>
-                    <li><a href="#"></a>Windows</li>
-                    <li><a href="#"></a>Surface</li>
-                    <li><a href="#"></a>Xbox</li>
-                    <li><a href="#"></a>Deals</li>
-                    <li><a href="#"></a>Support</li>
+                    <li><a href="#">Office</a></li>
+                    <li><a href="#">Windows</a></li>
+                    <li><a href="#">Surface</a></li>
+                    <li><a href="#">Xbox</a></li>
+                    <li><a href="#">Deals</a></li>
+                    <li><a href="#">Support</a></li>
                 </ul>
 
                 <ul class="right-menu">
@@ -211,6 +215,8 @@
             </div>
         </footer>
 
-        <script src="" async defer></script>
+        <script>
+            document.querySelector('.menu-btn').addEventListener('click', () => document.querySelector('.main-menu').classList.toggle('show'));
+        </script>
     </body>
 </html>
