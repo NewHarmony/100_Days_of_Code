@@ -1,3 +1,4 @@
+#Madlib game based on Nusery Rhymes
 story_num = int(input("Welcome to Madlibs! Please pick a story by entering a number from 0-3. "))
 
 adj1 = input("Adjective: ")
