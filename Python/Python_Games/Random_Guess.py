@@ -21,20 +21,26 @@ def player_guess(x):
                 print(f'Congrats! You have guessed the correct number: {random_number}! ')
 
 def computer_guess(low, high):
+    print(f'I am guessing a number between {low} & {high}')
+    response = ''
+    guess = random.randint(low,high)
     while response != 'y':
-
-        guess = random.randint(low,high)
-        response = str(input(f"Is the number \'{guess}\' yes(y), high(h), or low(l)?"))
+        response = str(input(f"Is the number \'{guess}\' yes(y), too high(h), or too low(l)?"))
         response = response.lower
-        if response == 'y'|| response == 'yes':
-            print(f'Awesome! Thanks for playing :)')
-        if response == 'l'|| response == 'low':
+
+        if response == 'y' or response == 'yes':
+            print('Yay! Awesome! Thanks for playing :)')
+            break
+        if response == 'l' or response == 'low':
             low = guess
             guess = random.randint(low,high)
-        elif response == 'h'|| response == 'high':
+        if response == 'h'or response == 'high':
             high = guess
             guess = random.randint(low,high)
+        elif response == 'q' or response == 'quit':
+            print('Until next time! Bye!')
+            break
+            
         
-
-
-player_guess(100)
+# player_guess(100)
+computer_guess(50, 100)
