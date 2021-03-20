@@ -2,7 +2,7 @@
 
 import random
 
-def guess(x):
+def player_guess(x):
     random_number = random.randint(1,x)
     guess = 0
     while guess != random_number:
@@ -10,6 +10,7 @@ def guess(x):
         if str(guess)== 'q':
             print("Thanks for playing! Bye!")
             break
+
         else:
             guess = int(guess)
             if guess < random_number:
@@ -19,4 +20,21 @@ def guess(x):
             elif guess == random_number:
                 print(f'Congrats! You have guessed the correct number: {random_number}! ')
 
-guess(100)
+def computer_guess(low, high):
+    while response != 'y':
+
+        guess = random.randint(low,high)
+        response = str(input(f"Is the number \'{guess}\' yes(y), high(h), or low(l)?"))
+        response = response.lower
+        if response == 'y'|| response == 'yes':
+            print(f'Awesome! Thanks for playing :)')
+        if response == 'l'|| response == 'low':
+            low = guess
+            guess = random.randint(low,high)
+        elif response == 'h'|| response == 'high':
+            high = guess
+            guess = random.randint(low,high)
+        
+
+
+player_guess(100)
