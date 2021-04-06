@@ -8,6 +8,7 @@
 
 :root {
     --primary-color: #f60f20;
+    --secondary-color: #1b206e;
 }
 
 html, body {
@@ -239,7 +240,59 @@ section.home{
 
 }
 
+/* Contact Page */
+.contact{
+    position: relative;
+    width: 100%;
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
 
+.contact-form {
+    position: relative;
+    background: #f9f9f9;
+    width: calc(100% - 400px);
+    padding: 60px 40px 20px;
+}
+
+.contact-form form {
+    width: 100%;
+    display: flex;
+}
+
+.contact-form .row {
+    width: 100%;
+    display: flex;
+}
+
+.contact-form .input50 {
+    width: 50%;
+    margin: 0 10px;
+}
+
+.contact-form .input100 {
+    width: 100%;
+    margin: 0 10px;
+}
+
+.contact-form .row input, .contact-form .row textarea {
+    position: relative;
+    border: 1px solid rgba(0,0,0, 0.2);
+    color:#111;
+    background: transparent;
+    width: 100%;
+    padding: 10px;
+    outline: none;
+    font-size: 16px;
+    font-weight: 300;
+    margin: 10px 0;
+    resize:none;
+}
+
+
+/* Media Queries */
 @media(max-width: 1068px) {
     .home-img {
         display: none;
