@@ -1,3 +1,5 @@
+# Credit: Tutorial from NeuralNine https://www.youtube.com/watch?v=PuZY9q-aKLw&t=219s
+
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
